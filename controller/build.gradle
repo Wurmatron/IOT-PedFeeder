@@ -1,0 +1,51 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+    id "com.diffplug.spotless" version "5.9.0"
+}
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+archivesBaseName = 'IOT-PetFeeder'
+
+dependencies {
+    // Libs
+    compile "com.boundary:high-scale-lib:${highscalelib_version}"
+    compile "com.google.code.gson:gson:${gson_version}"
+    compile "net.oneandone.reflections8:reflections8:${reflections_version}"
+    compile "org.javassist:javassist:${javassist_version}"
+    compile "commons-io:commons-io:${apache_io_version}"
+    compile "mysql:mysql-connector-java:${mysql_connector_version}"
+    compile "io.javalin:javalin:${javalin_verson}"
+    implementation "org.slf4j:slf4j-simple:1.7.30"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.3.71"
+    implementation "io.javalin:javalin-openapi:${javalin_openapi_version}"
+    implementation "com.pi4j:pi4j-core:${pi4j_version}"
+}
+
+spotless {
+    java {
+        removeUnusedImports()
+        indentWithSpaces()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}
+
+shadowJar.archiveName = "${archivesBaseName}.jar"
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'io.wurmatron.petfeeder.PetFeeder'
+        )
+    }
+}
+jar.finalizedBy('spotlessApply')
+jar.finalizedBy('shadowJar')
