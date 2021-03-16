@@ -9,6 +9,7 @@ import io.javalin.plugin.openapi.OpenApiOptions;
 import io.javalin.plugin.openapi.OpenApiPlugin;
 import io.javalin.plugin.openapi.ui.SwaggerOptions;
 import io.swagger.v3.oas.models.info.Info;
+import io.wurmatron.petfeeder.gpio.IOController;
 import joptsimple.internal.Strings;
 
 import java.io.File;
@@ -30,6 +31,7 @@ public class PetFeeder {
             conf.registerPlugin(new RedirectToLowercasePathPlugin());
             conf.enableCorsForAllOrigins();
         });
+        IOController.setup();
         server.start(config.port);
         server.get("/", ctx -> ctx.result("I'm a Pet Feeder"));
     }
@@ -49,7 +51,7 @@ public class PetFeeder {
             config = new Config();
             try {
                 file.createNewFile();
-                Files.write(file.toPath(),GSON.toJson(config).getBytes());
+                Files.write(file.toPath(), GSON.toJson(config).getBytes());
             } catch (IOException e) {
                 System.out.println("Unable to save config to '" + file.getAbsolutePath() + "'");
                 System.exit(1);
