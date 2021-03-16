@@ -11,6 +11,7 @@ import io.javalin.plugin.openapi.ui.SwaggerOptions;
 import io.swagger.v3.oas.models.info.Info;
 import io.wurmatron.petfeeder.gpio.IOController;
 import joptsimple.internal.Strings;
+import sun.misc.Signal;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +35,22 @@ public class PetFeeder {
         IOController.setup();
         server.start(config.port);
         server.get("/", ctx -> ctx.result("I'm a Pet Feeder"));
+        // TODO Temp
+        server.post("/led", ctx -> {
+            IOController.led(!IOController.led.isHigh());
+            ctx.result("" + IOController.led.isHigh());
+        });
+        // TODO Temp
+        server.post("/photo", ctx -> {
+            boolean state = IOController.photo();
+            ctx.result(state + "");
+        });
+        Signal.handle(new Signal("INT"), signal -> {
+            System.out.println("Shutting down!");
+            IOController.shutdown();
+            server.stop();
+            System.exit(0);
+        });
     }
 
     public static Config loadConfig() {

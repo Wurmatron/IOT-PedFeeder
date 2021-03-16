@@ -1,6 +1,7 @@
 package io.wurmatron.petfeeder.gpio;
 
 import com.pi4j.io.gpio.*;
+import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
 public class IOController {
 
@@ -11,18 +12,29 @@ public class IOController {
     public static GpioPinInput photo;
     public static GpioPinPwmOutput servo;
 
+    // Cache
+    private static boolean photoState;
+
     public static void setup() {
         controller = GpioFactory.getInstance();
-        led = controller.provisionDigitalOutputPin(RaspiPin.GPIO_01);
-        photo = controller.provisionDigitalInputPin(RaspiPin.GPIO_01,"photo");
+        led = controller.provisionDigitalOutputPin(Pinning.led_pos, PinState.LOW);
+        led.setShutdownOptions(true, PinState.LOW);
+        photo = controller.provisionDigitalInputPin(Pinning.photo_D0, "photo");
+        photo.addListener((GpioPinListenerDigital) e -> {
+            if (e.getState().isHigh()) {
+                photoState = true;
+            } else if (e.getState().isLow()) {
+                photoState = false;
+            }
+        });
     }
 
-    public static void led(boolean bool) {
-
+    public static void led(boolean state) {
+        led.setState(state);
     }
 
-    public static int photo() {
-        return -1;
+    public static boolean photo() {
+        return photoState;
     }
 
     public static void shutdown() {
