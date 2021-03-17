@@ -53,6 +53,10 @@ public class PetFeeder {
             IOController.servo(50,1000);
             ctx.result("");
         });
+        // TODO Temp
+        server.get("/weight", ctx -> {
+            ctx.result(  "" + IOController.getLoadCellWeight());
+        });
         Signal.handle(new Signal("INT"), signal -> {
             System.out.println("Shutting down!");
             IOController.shutdown();

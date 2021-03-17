@@ -2,7 +2,9 @@ package io.wurmatron.petfeeder.gpio;
 
 import com.pi4j.io.gpio.*;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import com.pi4j.wiringpi.GpioUtil;
 import io.wurmatron.petfeeder.PetFeeder;
+import kiosk.HX711;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +16,10 @@ public class IOController {
     public static GpioPinDigitalOutput led;
     public static GpioPinInput photo;
     public static GpioPinPwmOutput servo;
+    // HX711
+    public static GpioPinDigitalInput pinDT;
+    public static GpioPinDigitalOutput pinSCK;
+    public static HX711 loadCell;
 
     // Cache
     private static boolean photoState;
@@ -33,6 +39,13 @@ public class IOController {
         servo = controller.provisionSoftPwmOutputPin(Pinning.servo_pwm);
         servo.setPwmRange(100);
         servo.setPwm(0);
+        GpioUtil.enableNonPrivilegedAccess();
+        pinDT = controller.provisionDigitalInputPin(Pinning.load_cell_dt, "HX_DT", PinPullResistance.OFF);
+        pinSCK = controller.provisionDigitalOutputPin(Pinning.load_cell_sck, "HX_SLK", PinState.LOW);
+        loadCell = new HX711(pinDT, pinSCK, 128);
+        // TODO Add Calibration System
+        loadCell.emptyValue = 8444000; // Depends on Sensor
+        loadCell.emptyWeight = 18; // 15 - 19g
     }
 
     public static void led(boolean state) {
@@ -56,5 +69,10 @@ public class IOController {
             } catch (InterruptedException e) {
             }
         }, 0, TimeUnit.SECONDS);
+    }
+
+    public static double getLoadCellWeight() {
+        loadCell.read();
+        return loadCell.weight;
     }
 }
