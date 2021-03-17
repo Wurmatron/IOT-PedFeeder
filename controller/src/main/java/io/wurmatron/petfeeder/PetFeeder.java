@@ -16,11 +16,14 @@ import sun.misc.Signal;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class PetFeeder {
 
     // Global Instances
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    public static final ScheduledExecutorService SCHEDULE = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
     // Program Vars
     public static Javalin server;
     public static Config config;
@@ -44,6 +47,11 @@ public class PetFeeder {
         server.post("/photo", ctx -> {
             boolean state = IOController.photo();
             ctx.result(state + "");
+        });
+        // TODO Temp
+        server.post("/servo", ctx -> {
+            IOController.servo(50,1000);
+            ctx.result("");
         });
         Signal.handle(new Signal("INT"), signal -> {
             System.out.println("Shutting down!");

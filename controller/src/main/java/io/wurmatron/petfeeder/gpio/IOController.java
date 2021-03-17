@@ -2,6 +2,9 @@ package io.wurmatron.petfeeder.gpio;
 
 import com.pi4j.io.gpio.*;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
+import io.wurmatron.petfeeder.PetFeeder;
+
+import java.util.concurrent.TimeUnit;
 
 public class IOController {
 
@@ -27,6 +30,9 @@ public class IOController {
                 photoState = false;
             }
         });
+        servo = controller.provisionSoftPwmOutputPin(Pinning.servo_pwm);
+        servo.setPwmRange(100);
+        servo.setPwm(0);
     }
 
     public static void led(boolean state) {
@@ -39,5 +45,16 @@ public class IOController {
 
     public static void shutdown() {
         controller.shutdown();
+    }
+
+    public static void servo(int pwm,long timeMS) {
+        PetFeeder.SCHEDULE.schedule(() -> {
+            try {
+                servo.setPwm(pwm);
+                Thread.sleep(timeMS);
+                servo.setPwm(0);
+            } catch (InterruptedException e) {
+            }
+        }, 0, TimeUnit.SECONDS);
     }
 }
