@@ -75,4 +75,10 @@ public class IOController {
         loadCell.read();
         return loadCell.weight;
     }
+
+    public static void sleep(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (Exception e) {}
+    }
 }

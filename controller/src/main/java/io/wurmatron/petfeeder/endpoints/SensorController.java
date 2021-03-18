@@ -1,12 +1,14 @@
 package io.wurmatron.petfeeder.endpoints;
 
 import io.javalin.http.Handler;
-import io.javalin.plugin.openapi.annotations.OpenApi;
-import io.javalin.plugin.openapi.annotations.OpenApiContent;
-import io.javalin.plugin.openapi.annotations.OpenApiRequestBody;
-import io.javalin.plugin.openapi.annotations.OpenApiResponse;
+import io.javalin.plugin.openapi.annotations.*;
+import io.wurmatron.petfeeder.PetFeeder;
 import io.wurmatron.petfeeder.models.CalibrationLoadCell;
 import io.wurmatron.petfeeder.models.Dispense;
+
+import java.util.concurrent.TimeUnit;
+
+import static io.wurmatron.petfeeder.gpio.IOController.*;
 
 public class SensorController {
 
@@ -32,11 +34,26 @@ public class SensorController {
                     @OpenApiResponse(status = "200", description = "LED will blink a few times"),
                     @OpenApiResponse(status = "401", description = "Unauthorized, Invalid Token"),
             },
+            queryParams = @OpenApiParam(name = "count", type = Integer.class, description = "Amount of times the LED will blink"),
             tags = {"Test"}
     )
-    // TODO Implement
     public static Handler blinkLED = ctx -> {
-        ctx.contentType("application/json").status(501);
+        int inputCount;
+        try {
+             inputCount = ctx.queryParam("count", Integer.class).getOrNull();
+        } catch (Exception e) {
+            inputCount = 5;  // Default
+        }
+        int count = inputCount;
+        PetFeeder.SCHEDULE.schedule(() -> {
+            for(int c = 0; c < count; c++) {
+                led(true);
+                sleep(250);
+                led(false);
+                sleep(250);
+            }
+        }, 0, TimeUnit.SECONDS);
+        ctx.contentType("application/json").status(200);
     };
 
     @OpenApi(

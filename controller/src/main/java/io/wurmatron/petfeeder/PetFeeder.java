@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+
 public class PetFeeder {
 
     // Global Instances
@@ -36,7 +37,7 @@ public class PetFeeder {
             conf.registerPlugin(new RedirectToLowercasePathPlugin());
             conf.enableCorsForAllOrigins();
         });
-//        IOController.setup();
+        IOController.setup();
         server.get("/", ctx -> ctx.result("I'm a Pet Feeder"));
         Routes.register(server);
         server.start(config.port);
