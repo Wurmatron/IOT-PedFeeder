@@ -18,6 +18,7 @@ public class Routes {
         app.delete("/schedule",ScheduleController.deleteSchedule);
         // Sensor
         app.post("/sensor/led", SensorController.blinkLED);
+        app.post("/sensor/servo", SensorController.runServo);
         app.post("/sensor/level", SensorController.testLevelSensor);
         app.get("/sensor/weight", SensorController.getLoadCellWeight);
         app.post("/sensor/calibrate", SensorController.calibrateLoadCell);
