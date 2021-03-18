@@ -1,17 +1,29 @@
 package io.wurmatron.petfeeder.endpoints;
 
+import com.google.gson.JsonParseException;
 import io.javalin.http.Handler;
 import io.javalin.plugin.openapi.annotations.*;
 import io.wurmatron.petfeeder.PetFeeder;
 import io.wurmatron.petfeeder.gpio.IOController;
+import io.wurmatron.petfeeder.models.Calibration;
 import io.wurmatron.petfeeder.models.CalibrationLoadCell;
+import jdk.internal.joptsimple.internal.Strings;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.util.concurrent.TimeUnit;
 
-import static io.wurmatron.petfeeder.gpio.IOController.led;
-import static io.wurmatron.petfeeder.gpio.IOController.sleep;
+import static io.wurmatron.petfeeder.PetFeeder.GSON;
+import static io.wurmatron.petfeeder.gpio.IOController.*;
 
 public class SensorController {
+
+    public static final int COUNT_FOR_AVERAGE_CALIBRATION = 100;
+    public static final File calibrationFile = new File("calibration.json");
+
+    public static double diff;
+    public static boolean isCalibrated = false;
+
 
     @OpenApi(
             summary = "Run the servo motor",
@@ -89,9 +101,15 @@ public class SensorController {
             },
             tags = {"Test"}
     )
-    // TODO Implement
     public static Handler getLoadCellWeight = ctx -> {
-        ctx.contentType("application/json").status(501);
+        if (isCalibrated) {
+            loadCell.read();
+            double aboveDefault = loadCell.value - loadCell.emptyValue;
+            double weight = aboveDefault / diff;
+            ctx.contentType("application/json").status(200).result("{ \"weight\": " + weight + " }");
+        } else {
+            ctx.contentType("application/json").status(409);
+        }
     };
 
     @OpenApi(
@@ -101,11 +119,76 @@ public class SensorController {
             responses = {
                     @OpenApiResponse(status = "200", description = "Weight of the load cell", content = @OpenApiContent(from = Double.class)),
                     @OpenApiResponse(status = "401", description = "Unauthorized, Invalid Token"),
+                    @OpenApiResponse(status = "422", description = "Invalid Json / Calibration Type"),
             },
             tags = {"Test"}
     )
-    // TODO Implement
     public static Handler calibrateLoadCell = ctx -> {
-        ctx.contentType("application/json").status(501);
+        try {
+            CalibrationLoadCell calibration = GSON.fromJson(ctx.body(), CalibrationLoadCell.class);
+            if (calibration.stage.equals(CalibrationLoadCell.Stage.WITHOUT)) {
+                long avg = 0;
+                for (int x = 0; x < COUNT_FOR_AVERAGE_CALIBRATION; x++) {
+                    loadCell.read();
+                    avg += loadCell.value;
+                }
+                avg /= COUNT_FOR_AVERAGE_CALIBRATION;
+                loadCell.emptyValue = avg;
+                loadCell.emptyWeight = calibration.weight;
+                ctx.contentType("application/json").status(200);
+            } else if (calibration.stage.equals(CalibrationLoadCell.Stage.WITH)) {
+                loadCell.read();
+                long avg = 0;
+                for (int x = 0; x < COUNT_FOR_AVERAGE_CALIBRATION; x++) {
+                    loadCell.read();
+                    avg += loadCell.value;
+                }
+                loadCell.calibrationWeight = calibration.weight;
+                avg /= COUNT_FOR_AVERAGE_CALIBRATION;
+                diff = (avg - loadCell.emptyValue) / calibration.weight;
+                isCalibrated = true;
+                saveCalibration();
+                ctx.contentType("application/json").status(200);
+            } else {
+                ctx.contentType("application/json").status(422);
+            }
+        } catch (JsonParseException e) {
+            ctx.contentType("application/json").status(422);
+        }
     };
+
+    private static void saveCalibration() {
+        if (!calibrationFile.exists()) {
+            try {
+                calibrationFile.createNewFile();
+            } catch (Exception e) {
+                System.out.println("Failed to save calibration file!");
+                e.printStackTrace();
+            }
+        }
+        try {
+            Calibration cal = new Calibration(loadCell.emptyValue, loadCell.emptyWeight, loadCell.calibrationValue, loadCell.calibrationWeight, diff);
+            Files.write(calibrationFile.toPath(), GSON.toJson(cal).getBytes());
+        } catch (Exception e) {
+            System.out.println("Failed to save calibration file!");
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadCalibration() {
+        try {
+            if (calibrationFile.exists()) {
+                Calibration calibration = GSON.fromJson(Strings.join(Files.readAllLines(calibrationFile.toPath()).toArray(new String[0]), "\n"), Calibration.class);
+                loadCell.emptyValue = calibration.emptyVal;
+                loadCell.emptyWeight = calibration.emptyWeight;
+                loadCell.calibrationValue = calibration.calibratedVal;
+                loadCell.calibrationWeight = calibration.calibratedWeight;
+                diff = calibration.diff;
+                isCalibrated = true;
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to load calibration file!, Deleting...");
+            calibrationFile.delete();
+        }
+    }
 }

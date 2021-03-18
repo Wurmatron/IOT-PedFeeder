@@ -24,8 +24,6 @@ public class HX711 {
     public long calibrationValue = 0;
     public double calibrationWeight = 0.0d;
 
-    public double fullCupWeight = 1000.0d;
-
     public double weight = 0.0d;
     public long value = 0;
 

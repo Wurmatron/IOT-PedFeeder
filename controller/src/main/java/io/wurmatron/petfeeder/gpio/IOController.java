@@ -4,6 +4,7 @@ import com.pi4j.io.gpio.*;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import com.pi4j.wiringpi.GpioUtil;
 import io.wurmatron.petfeeder.PetFeeder;
+import io.wurmatron.petfeeder.endpoints.SensorController;
 import kiosk.HX711;
 
 import java.util.concurrent.TimeUnit;
@@ -43,9 +44,7 @@ public class IOController {
         pinDT = controller.provisionDigitalInputPin(Pinning.load_cell_dt, "HX_DT", PinPullResistance.OFF);
         pinSCK = controller.provisionDigitalOutputPin(Pinning.load_cell_sck, "HX_SLK", PinState.LOW);
         loadCell = new HX711(pinDT, pinSCK, 128);
-        // TODO Add Calibration System
-        loadCell.emptyValue = 8444000; // Depends on Sensor
-        loadCell.emptyWeight = 18; // 15 - 19g
+        SensorController.loadCalibration();
     }
 
     public static void led(boolean state) {
