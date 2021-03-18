@@ -9,6 +9,7 @@ import io.javalin.plugin.openapi.OpenApiOptions;
 import io.javalin.plugin.openapi.OpenApiPlugin;
 import io.javalin.plugin.openapi.ui.SwaggerOptions;
 import io.swagger.v3.oas.models.info.Info;
+import io.wurmatron.petfeeder.endpoints.Routes;
 import io.wurmatron.petfeeder.gpio.IOController;
 import joptsimple.internal.Strings;
 import sun.misc.Signal;
@@ -35,28 +36,10 @@ public class PetFeeder {
             conf.registerPlugin(new RedirectToLowercasePathPlugin());
             conf.enableCorsForAllOrigins();
         });
-        IOController.setup();
-        server.start(config.port);
+//        IOController.setup();
         server.get("/", ctx -> ctx.result("I'm a Pet Feeder"));
-        // TODO Temp
-        server.post("/led", ctx -> {
-            IOController.led(!IOController.led.isHigh());
-            ctx.result("" + IOController.led.isHigh());
-        });
-        // TODO Temp
-        server.post("/photo", ctx -> {
-            boolean state = IOController.photo();
-            ctx.result(state + "");
-        });
-        // TODO Temp
-        server.post("/servo", ctx -> {
-            IOController.servo(50, 1000);
-            ctx.result("");
-        });
-        // TODO Temp
-        server.get("/weight", ctx -> {
-            ctx.result("" + IOController.getLoadCellWeight());
-        });
+        Routes.register(server);
+        server.start(config.port);
         Signal.handle(new Signal("INT"), signal -> {
             System.out.println("Shutting down!");
             IOController.shutdown();

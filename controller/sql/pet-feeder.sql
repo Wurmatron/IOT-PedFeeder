@@ -52,13 +52,19 @@ CREATE TABLE `dispense` (
 --
 -- Table structure for table `schedule`
 --
-
 CREATE TABLE `schedule` (
-  `nextInterval` int(11) NOT NULL,
-  `timeInterval` int(11) NOT NULL,
-  `amount` int(11) NOT NULL,
-  `name` text NOT NULL
+                            `scheduleID` int(11) NOT NULL,
+                            `name` text NOT NULL,
+                            `nextInterval` bigint(20) NOT NULL,
+                            `days` text NOT NULL,
+                            `time` text NOT NULL,
+                            `amount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+ADD PRIMARY KEY (`scheduleID`);
+
+ALTER TABLE `schedule`
+    MODIFY `scheduleID` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
