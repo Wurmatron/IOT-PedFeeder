@@ -50,12 +50,12 @@ public class PetFeeder {
         });
         // TODO Temp
         server.post("/servo", ctx -> {
-            IOController.servo(50,1000);
+            IOController.servo(50, 1000);
             ctx.result("");
         });
         // TODO Temp
         server.get("/weight", ctx -> {
-            ctx.result(  "" + IOController.getLoadCellWeight());
+            ctx.result("" + IOController.getLoadCellWeight());
         });
         Signal.handle(new Signal("INT"), signal -> {
             System.out.println("Shutting down!");
