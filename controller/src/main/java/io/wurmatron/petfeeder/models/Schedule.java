@@ -18,6 +18,9 @@ public class Schedule {
         this.amount = amount;
     }
 
+    public Schedule() {
+    }
+
     public enum Day {
         MONDAY, TUESDAY, WENDSDAY, TURSDAY, FRIDAY, SATURDAY, SUNDAY;
     }

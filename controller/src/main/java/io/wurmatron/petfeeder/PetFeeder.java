@@ -11,6 +11,7 @@ import io.javalin.plugin.openapi.ui.SwaggerOptions;
 import io.swagger.v3.oas.models.info.Info;
 import io.wurmatron.petfeeder.endpoints.Routes;
 import io.wurmatron.petfeeder.gpio.IOController;
+import io.wurmatron.petfeeder.sql.DatabaseManager;
 import joptsimple.internal.Strings;
 import sun.misc.Signal;
 
@@ -29,6 +30,7 @@ public class PetFeeder {
     // Program Vars
     public static Javalin server;
     public static Config config;
+    public static DatabaseManager database;
 
     public static void main(String[] args) {
         config = loadConfig();
@@ -37,6 +39,7 @@ public class PetFeeder {
             conf.registerPlugin(new RedirectToLowercasePathPlugin());
             conf.enableCorsForAllOrigins();
         });
+        database = new DatabaseManager(config.Database);
         IOController.setup();
         server.get("/", ctx -> ctx.result("I'm a Pet Feeder"));
         Routes.register(server);

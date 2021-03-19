@@ -11,4 +11,7 @@ public class Consume {
         this.timeInterval = timeInterval;
         this.amount = amount;
     }
+
+    public Consume() {
+    }
 }
