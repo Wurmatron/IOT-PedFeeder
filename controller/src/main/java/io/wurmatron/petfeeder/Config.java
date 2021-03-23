@@ -5,6 +5,7 @@ public class Config {
     public boolean debug;
     public int port;
     public int motorPWM;
+    public boolean testing;
 
     public Database Database;
 
@@ -13,12 +14,14 @@ public class Config {
         this.port = 8080;
         this.Database = new Database();
         this.motorPWM = 50;
+        this.testing = false;
     }
 
-    public Config(boolean debug, int port, int motorPWM, Config.Database database) {
+    public Config(boolean debug, int port, int motorPWM, boolean testing, Config.Database database) {
         this.debug = debug;
         this.port = port;
         this.motorPWM = motorPWM;
+        this.testing = testing;
         Database = database;
     }
 

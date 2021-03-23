@@ -18,6 +18,7 @@ import sun.misc.Signal;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -31,6 +32,7 @@ public class PetFeeder {
     public static Javalin server;
     public static Config config;
     public static DatabaseManager database;
+    public static String authToken;
 
     public static void main(String[] args) {
         config = loadConfig();
@@ -39,8 +41,11 @@ public class PetFeeder {
             conf.registerPlugin(new RedirectToLowercasePathPlugin());
             conf.enableCorsForAllOrigins();
         });
-        database = new DatabaseManager(config.Database);
-//        IOController.setup();
+        if (!config.testing) {
+            database = new DatabaseManager(config.Database);
+            IOController.setup();
+        }
+        authToken = loadAuthToken();
         server.get("/", ctx -> ctx.result("I'm a Pet Feeder"));
         Routes.register(server);
         server.start(config.port);
@@ -74,5 +79,32 @@ public class PetFeeder {
             }
         }
         return config;
+    }
+
+    public static String loadAuthToken() {
+        File file = new File("auth.txt");
+        if (file.exists()) {
+            try {
+                return Files.readAllLines(file.toPath()).get(0);
+            } catch (IOException e) {
+                System.out.println("Unable to read auth.txt");
+                System.exit(1);
+            }
+        } else {
+            try {
+                String token = genRandomToken();
+                Files.write(file.toPath(), token.getBytes());
+                System.out.println("Your Auth Token is: " + token);
+                return token;
+            } catch (IOException e) {
+                System.out.println("Failed to create auth.txt");
+                System.exit(1);
+            }
+        }
+        return null;
+    }
+
+    public static String genRandomToken() {
+        return UUID.randomUUID().toString().substring(0,7).toUpperCase();
     }
 }
