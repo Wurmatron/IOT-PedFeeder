@@ -33,7 +33,7 @@ public class ScheduleController {
     )
     // TODO Implement
     public static Handler getSchedule = ctx -> {
-        ctx.contentType("application/json").status(501);
+
     };
 
     @OpenApi(

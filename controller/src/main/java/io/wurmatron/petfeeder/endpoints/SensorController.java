@@ -103,7 +103,7 @@ public class SensorController {
     )
     public static Handler getLoadCellWeight = ctx -> {
         if (isCalibrated) {
-            loadCell.read();
+            loadCell.read();    // Read Serial Data from Load Cell (AMP)
             double aboveDefault = loadCell.value - loadCell.emptyValue;
             double weight = aboveDefault / diff;
             ctx.contentType("application/json").status(200).result("{ \"weight\": " + weight + " }");

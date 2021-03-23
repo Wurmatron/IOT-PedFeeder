@@ -40,7 +40,7 @@ public class PetFeeder {
             conf.enableCorsForAllOrigins();
         });
         database = new DatabaseManager(config.Database);
-        IOController.setup();
+//        IOController.setup();
         server.get("/", ctx -> ctx.result("I'm a Pet Feeder"));
         Routes.register(server);
         server.start(config.port);
