@@ -27,6 +27,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        if(position == 0) {
+           return GeneralFragment.newInstance(position+1);
+        } else if(position == 1) {
+            return ScheduleFragment.newInstance(position+1);
+        }  else if(position == 2) {
+            return HistoryFragment.newInstance(position+1);
+        } else if(position == 3) {
+            return SettingsFragment.newInstance(position+1);
+        }
         return PlaceholderFragment.newInstance(position + 1);
     }
 
