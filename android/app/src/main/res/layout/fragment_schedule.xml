@@ -7,4 +7,571 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.PlaceholderFragment">
 
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="400sp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="50sp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:layout_width="350sp"
+                android:layout_height="match_parent"
+                android:padding="10sp">
+
+                <TextView
+                    android:id="@+id/schedule1"
+                    android:layout_width="350sp"
+                    android:layout_height="wrap_content"
+                    android:text="Schedule 1"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/time1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Time:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/timeview1"
+                        android:layout_width="150sp"
+                        android:layout_height="wrap_content"
+                        android:text="3:25AM, 5:50PM"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/date1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Date:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/dateview1"
+                        android:layout_width="250sp"
+                        android:layout_height="wrap_content"
+                        android:text="Weekdays"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/amount1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Amount:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/amountView1"
+                        android:layout_width="200sp"
+                        android:layout_height="wrap_content"
+                        android:text="800g"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/schedule1Void"
+                        android:layout_width="75sp"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/editSchedule1"
+                        android:layout_width="60sp"
+                        android:layout_height="50sp"
+                        android:text="Edit"
+                        android:textColor="@color/white"
+                        android:textSize="8sp"
+                        android:layout_gravity="right"/>
+                </TableRow>
+            </TableLayout>
+
+
+            <TableLayout
+                android:layout_width="350sp"
+                android:layout_height="match_parent"
+                android:padding="10sp">
+
+                <TextView
+                    android:id="@+id/schedule1"
+                    android:layout_width="350sp"
+                    android:layout_height="wrap_content"
+                    android:text="Schedule 2"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/time1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Time:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/timeview1"
+                        android:layout_width="150sp"
+                        android:layout_height="wrap_content"
+                        android:text="3:25AM, 5:50PM"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/date1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Date:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/dateview1"
+                        android:layout_width="250sp"
+                        android:layout_height="wrap_content"
+                        android:text="Weekdays"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/amount1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Amount:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/amountView1"
+                        android:layout_width="200sp"
+                        android:layout_height="wrap_content"
+                        android:text="800g"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/schedule1Void"
+                        android:layout_width="75sp"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/editSchedule1"
+                        android:layout_width="60sp"
+                        android:layout_height="50sp"
+                        android:text="Edit"
+                        android:textColor="@color/white"
+                        android:textSize="8sp"
+                        android:layout_gravity="right"/>
+                </TableRow>
+            </TableLayout>
+
+
+            <TableLayout
+                android:layout_width="350sp"
+                android:layout_height="match_parent"
+                android:padding="10sp">
+
+                <TextView
+                    android:id="@+id/schedule1"
+                    android:layout_width="350sp"
+                    android:layout_height="wrap_content"
+                    android:text="Schedule 3"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/time1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Time:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/timeview1"
+                        android:layout_width="150sp"
+                        android:layout_height="wrap_content"
+                        android:text="3:25AM, 5:50PM"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/date1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Date:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/dateview1"
+                        android:layout_width="250sp"
+                        android:layout_height="wrap_content"
+                        android:text="Weekdays"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/amount1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Amount:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/amountView1"
+                        android:layout_width="200sp"
+                        android:layout_height="wrap_content"
+                        android:text="800g"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/schedule1Void"
+                        android:layout_width="75sp"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/editSchedule1"
+                        android:layout_width="60sp"
+                        android:layout_height="50sp"
+                        android:text="Edit"
+                        android:textColor="@color/white"
+                        android:textSize="8sp"
+                        android:layout_gravity="right"/>
+                </TableRow>
+            </TableLayout>
+
+
+            <TableLayout
+                android:layout_width="350sp"
+                android:layout_height="match_parent"
+                android:padding="10sp">
+
+                <TextView
+                    android:id="@+id/schedule1"
+                    android:layout_width="350sp"
+                    android:layout_height="wrap_content"
+                    android:text="Schedule 4"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/time1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Time:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/timeview1"
+                        android:layout_width="150sp"
+                        android:layout_height="wrap_content"
+                        android:text="3:25AM, 5:50PM"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/date1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Date:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/dateview1"
+                        android:layout_width="250sp"
+                        android:layout_height="wrap_content"
+                        android:text="Weekdays"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/amount1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Amount:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/amountView1"
+                        android:layout_width="200sp"
+                        android:layout_height="wrap_content"
+                        android:text="800g"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/schedule1Void"
+                        android:layout_width="75sp"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/editSchedule1"
+                        android:layout_width="60sp"
+                        android:layout_height="50sp"
+                        android:text="Edit"
+                        android:textColor="@color/white"
+                        android:textSize="8sp"
+                        android:layout_gravity="right"/>
+                </TableRow>
+            </TableLayout>
+
+
+
+            <TableLayout
+                android:layout_width="350sp"
+                android:layout_height="match_parent"
+                android:padding="10sp">
+
+                <TextView
+                    android:id="@+id/schedule1"
+                    android:layout_width="350sp"
+                    android:layout_height="wrap_content"
+                    android:text="Schedule 5"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/time1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Time:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/timeview1"
+                        android:layout_width="150sp"
+                        android:layout_height="wrap_content"
+                        android:text="3:25AM, 5:50PM"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/date1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Date:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/dateview1"
+                        android:layout_width="250sp"
+                        android:layout_height="wrap_content"
+                        android:text="Weekdays"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/amount1"
+                        android:layout_width="30sp"
+                        android:layout_height="wrap_content"
+                        android:text="Amount:"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/amountView1"
+                        android:layout_width="200sp"
+                        android:layout_height="wrap_content"
+                        android:text="800g"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/schedule1Void"
+                        android:layout_width="75sp"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/editSchedule1"
+                        android:layout_width="60sp"
+                        android:layout_height="50sp"
+                        android:text="Edit"
+                        android:textColor="@color/white"
+                        android:textSize="8sp"
+                        android:layout_gravity="right"/>
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
