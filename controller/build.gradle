@@ -11,7 +11,7 @@ repositories {
 }
 
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '11'
 archivesBaseName = 'IOT-PetFeeder'
 
 dependencies {

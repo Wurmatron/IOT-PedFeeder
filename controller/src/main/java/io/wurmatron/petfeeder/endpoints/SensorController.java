@@ -7,7 +7,7 @@ import io.wurmatron.petfeeder.PetFeeder;
 import io.wurmatron.petfeeder.gpio.IOController;
 import io.wurmatron.petfeeder.models.Calibration;
 import io.wurmatron.petfeeder.models.CalibrationLoadCell;
-import jdk.internal.joptsimple.internal.Strings;
+import joptsimple.internal.Strings;
 
 import java.io.File;
 import java.nio.file.Files;

@@ -3,7 +3,7 @@ package io.wurmatron.petfeeder.sql;
 import io.wurmatron.petfeeder.models.Consume;
 import io.wurmatron.petfeeder.models.Dispense;
 import io.wurmatron.petfeeder.models.Schedule;
-import jdk.internal.joptsimple.internal.Strings;
+import joptsimple.internal.Strings;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

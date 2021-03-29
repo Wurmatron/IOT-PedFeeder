@@ -33,7 +33,7 @@ public class Routes {
     public static void accessManager(Javalin app) {
         app.config.accessManager((handler, ctx, permittedRoles) -> {
             AuthRoles userRole = getUserRole(ctx);
-            if (permittedRoles.contains(userRole)) {
+            if (userRole.equals(AuthRoles.ADMIN) || permittedRoles.contains(userRole)) {
                 handler.handle(ctx);
             } else {
                 ctx.contentType("application/json").status(401).result("Unauthorized");
