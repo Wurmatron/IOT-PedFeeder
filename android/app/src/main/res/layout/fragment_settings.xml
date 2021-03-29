@@ -50,6 +50,7 @@
         android:layout_marginStart="20sp"
         android:layout_marginTop="60sp"
         android:text="Test Servo"
+        android:onClick="onTestServo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tokenDisp" />
 
@@ -60,6 +61,7 @@
         android:layout_marginStart="20sp"
         android:layout_marginTop="120sp"
         android:text="Test LED"
+        android:onClick="onTestLED"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tokenDisp" />
 
@@ -74,7 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tokenDisp" />
 
     <Button
-        android:id="@+id/teswtWeight"
+        android:id="@+id/testWeight"
         android:layout_width="150sp"
         android:layout_height="50sp"
         android:layout_marginStart="20sp"

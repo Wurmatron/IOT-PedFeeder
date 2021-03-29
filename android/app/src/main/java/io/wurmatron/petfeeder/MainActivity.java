@@ -9,14 +9,19 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.StrictMode;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import io.wurmatron.petfeeder.routes.RouteGenerator;
 import io.wurmatron.petfeeder.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,5 +31,14 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+    }
+
+
+    public void onTestLED(View v) {
+        RouteGenerator.postQuery("sensor/led", "?count=25");
+    }
+
+    public void onTestServo(View v) {
+        RouteGenerator.postQuery("sensor/servo", "?time=500");
     }
 }

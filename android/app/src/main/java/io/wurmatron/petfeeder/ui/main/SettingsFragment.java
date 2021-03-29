@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import io.wurmatron.petfeeder.R;
+import io.wurmatron.petfeeder.routes.RouteGenerator;
 
 
 public class SettingsFragment extends Fragment {
@@ -17,6 +19,10 @@ public class SettingsFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
+
+    // Buttons
+    private Button testLED;
+
 
     public static SettingsFragment newInstance(int index) {
         SettingsFragment fragment = new SettingsFragment();
@@ -37,6 +43,8 @@ public class SettingsFragment extends Fragment {
         pageViewModel.setIndex(index);
         pageViewModel.name = getResources().getString(SectionsPagerAdapter.TAB_TITLES[index - 1]);
     }
+
+
 
     @Override
     public View onCreateView(
