@@ -3,6 +3,8 @@ package io.wurmatron.petfeeder.routes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -43,6 +45,34 @@ public class RouteGenerator {
 
     public static void postQuery(String url, String query) {
         send("post", url + query, null);
+    }
+
+    public static <T extends Object> T postResults(String url,String type, Class<T> resultJsonData) {
+        if (!url.isEmpty()) {
+            try {
+                URL obj = new URL(BASE_URL + url);
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                con.setRequestMethod(type);
+                con.setRequestProperty("token", token);
+                con.setReadTimeout(300000);
+                int responseCode = con.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK
+                        || responseCode == HttpURLConnection.HTTP_ACCEPTED) {
+                    BufferedReader in = new BufferedReader(
+                            new InputStreamReader(con.getInputStream()));
+                    String inputLine;
+                    StringBuilder response = new StringBuilder();
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+                    return GSON.fromJson(response.toString(), resultJsonData);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
 }

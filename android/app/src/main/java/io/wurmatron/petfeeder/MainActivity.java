@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -31,14 +32,5 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
-    }
-
-
-    public void onTestLED(View v) {
-        RouteGenerator.postQuery("sensor/led", "?count=25");
-    }
-
-    public void onTestServo(View v) {
-        RouteGenerator.postQuery("sensor/servo", "?time=500");
     }
 }
