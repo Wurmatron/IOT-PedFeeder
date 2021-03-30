@@ -2,10 +2,13 @@ package io.wurmatron.petfeeder.ui.main;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,6 +46,11 @@ public class SettingsFragment extends Fragment {
     // Load / Weight
     private Button testLoad;
     private TextView loadResults;
+    // Misc
+    private EditText ipAddr;
+    private TextView isConnected;
+    private EditText token;
+
 
     public static SettingsFragment newInstance(int index) {
         SettingsFragment fragment = new SettingsFragment();
@@ -115,7 +123,7 @@ public class SettingsFragment extends Fragment {
             photoResults = getView().findViewById(R.id.photoDisplay);
             testPhoto.setOnClickListener(v -> {
                 RouteGenerator.EXECUTORS.schedule(() -> {
-                    Results result = RouteGenerator.postResults("sensor/level","POST", Results.class);
+                    Results result = RouteGenerator.postResults("sensor/level", "POST", Results.class);
                     if (result != null) {
                         if (Boolean.getBoolean(result.result)) {
                             photoResults.setTextColor(Color.rgb(255, 0, 0));
@@ -134,13 +142,66 @@ public class SettingsFragment extends Fragment {
             loadResults = getView().findViewById(R.id.weightDisplay);
             testLoad.setOnClickListener(v -> {
                 RouteGenerator.EXECUTORS.schedule(() -> {
-                    Weight result = RouteGenerator.postResults("sensor/weight","GET", Weight.class);
+                    Weight result = RouteGenerator.postResults("sensor/weight", "GET", Weight.class);
                     if (result != null) {
                         loadResults.setText(((int) result.weight) + "g");
                     } else {
                         loadResults.setText("Err");
                     }
                 }, 0, TimeUnit.SECONDS);
+            });
+            ipAddr = getView().findViewById(R.id.editIP);
+            token = getView().findViewById(R.id.editToken);
+            isConnected = getView().findViewById(R.id.isConnected);
+            ipAddr.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    RouteGenerator.BASE_URL = "http://" + s.toString() + ":8080/";
+                    RouteGenerator.EXECUTORS.schedule(() -> {
+                        Weight result = RouteGenerator.postResults("sensor/weight", "GET", Weight.class);
+                        if (result != null) {
+                            isConnected.setText("Yes");
+                            isConnected.setTextColor(Color.rgb(0, 255, 0));
+                        } else {
+                            isConnected.setText("No");
+                            isConnected.setTextColor(Color.rgb(255, 0, 0));
+                        }
+                    }, 0, TimeUnit.SECONDS);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+            token.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    RouteGenerator.token = s.toString();
+                    RouteGenerator.EXECUTORS.schedule(() -> {
+                        Weight result = RouteGenerator.postResults("sensor/weight", "GET", Weight.class);
+                        if (result != null) {
+                            isConnected.setText("Yes");
+                            isConnected.setTextColor(Color.rgb(0, 255, 0));
+                        } else {
+                            isConnected.setText("No");
+                            isConnected.setTextColor(Color.rgb(255, 0, 0));
+                        }
+                    }, 0, TimeUnit.SECONDS);
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
             });
         } catch (Exception e) {
             e.printStackTrace();
