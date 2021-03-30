@@ -15,8 +15,8 @@ import java.util.concurrent.TimeUnit;
 public class RouteGenerator {
 
     // TODO Add setup page
-    public static String BASE_URL = "http://xxx.xxx.xxx.xxx:8080/";
-    public static String token = "CB902EB";
+    public static String BASE_URL = "";
+    public static String token = "";
     public static ScheduledExecutorService EXECUTORS = Executors.newScheduledThreadPool(1);
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 

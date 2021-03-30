@@ -1,5 +1,7 @@
 package io.wurmatron.petfeeder;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,6 +25,9 @@ import io.wurmatron.petfeeder.routes.RouteGenerator;
 import io.wurmatron.petfeeder.ui.main.SectionsPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static SharedPreferences sharedpreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,5 +37,12 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
+        sharedpreferences = getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        loadPreferences();
+    }
+
+    private void loadPreferences() {
+        RouteGenerator.BASE_URL = "http://" + sharedpreferences.getString("ip", "192.168.1.X") + ":8080/";
+        RouteGenerator.token = sharedpreferences.getString("token", "");
     }
 }
