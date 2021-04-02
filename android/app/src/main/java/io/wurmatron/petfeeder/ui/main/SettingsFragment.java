@@ -22,6 +22,7 @@ import io.wurmatron.petfeeder.R;
 import io.wurmatron.petfeeder.models.Results;
 import io.wurmatron.petfeeder.models.Weight;
 import io.wurmatron.petfeeder.routes.RouteGenerator;
+import io.wurmatron.petfeeder.routes.UpdateHelper;
 
 import static io.wurmatron.petfeeder.MainActivity.sharedpreferences;
 
@@ -123,6 +124,7 @@ public class SettingsFragment extends Fragment {
     public void setupServoClickListeners() {
         testServo.setOnClickListener(v -> {
             int iTime = Integer.parseInt(servoTime.getText().toString());
+            System.out.println("Servo");
             RouteGenerator.postQuery("sensor/servo", "?time=" + iTime);
         });
         servoDown.setOnClickListener(v -> {
@@ -159,6 +161,7 @@ public class SettingsFragment extends Fragment {
     }
 
     public void setupUpdateListeners() {
+        updateWeightStatus();
         testLoad.setOnClickListener(v -> {
             updateWeightStatus();
         });
@@ -251,20 +254,7 @@ public class SettingsFragment extends Fragment {
     }
 
     public void updateWeightStatus() {
-        RouteGenerator.EXECUTORS.schedule(() -> {
-            try {
-                Weight result = RouteGenerator.postResults("sensor/weight", "GET", Weight.class);
-                if (result != null) {
-                    loadResults.setText(((int) result.weight) + "g");
-                } else {
-                    loadResults.setTextColor(Color.rgb(255, 0, 0));
-                    loadResults.setText("Err");
-                }
-            } catch (Exception e) {
-                loadResults.setTextColor(Color.rgb(255, 0, 0));
-                loadResults.setText("Err");
-            }
-        }, 0, TimeUnit.SECONDS);
+        UpdateHelper.updateWeight(loadResults);
     }
 
     public void updatePreferences() {

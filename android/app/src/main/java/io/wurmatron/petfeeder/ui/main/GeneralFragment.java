@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import io.wurmatron.petfeeder.R;
+import io.wurmatron.petfeeder.routes.UpdateHelper;
 
 
 public class GeneralFragment extends Fragment {
@@ -20,6 +21,8 @@ public class GeneralFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
+
+    private TextView currentWeight;
 
     public static GeneralFragment newInstance(int index) {
         GeneralFragment fragment = new GeneralFragment();
@@ -46,5 +49,12 @@ public class GeneralFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_general, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        currentWeight = getView().findViewById(R.id.currentWeight);
+        UpdateHelper.updateWeight(currentWeight);
     }
 }

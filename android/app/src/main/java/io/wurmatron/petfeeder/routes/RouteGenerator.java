@@ -33,6 +33,7 @@ public class RouteGenerator {
                 String json = GSON.toJson(data).replaceAll("\n", "");
                 connection.setRequestProperty("Content-Length", String.valueOf(json.length()));
                 connection.getOutputStream().write(json.getBytes());
+                System.out.println(sendURL.toString() + " " + ((HttpURLConnection) connection).getResponseCode());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -47,14 +48,14 @@ public class RouteGenerator {
         send("post", url + query, null);
     }
 
-    public static <T extends Object> T postResults(String url,String type, Class<T> resultJsonData) {
+    public static <T extends Object> T postResults(String url, String type, Class<T> resultJsonData) {
         if (!url.isEmpty()) {
             try {
                 URL obj = new URL(BASE_URL + url);
                 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
                 con.setRequestMethod(type);
                 con.setRequestProperty("token", token);
-                con.setReadTimeout(300000);
+                con.setReadTimeout(1000);
                 int responseCode = con.getResponseCode();
                 if (responseCode == HttpURLConnection.HTTP_OK
                         || responseCode == HttpURLConnection.HTTP_ACCEPTED) {
