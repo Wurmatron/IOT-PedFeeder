@@ -11,6 +11,7 @@ import io.javalin.plugin.openapi.ui.SwaggerOptions;
 import io.swagger.v3.oas.models.info.Info;
 import io.wurmatron.petfeeder.endpoints.Routes;
 import io.wurmatron.petfeeder.gpio.IOController;
+import io.wurmatron.petfeeder.schedule.ConsumptionHandler;
 import io.wurmatron.petfeeder.schedule.ScheduleScheduler;
 import io.wurmatron.petfeeder.sql.DatabaseManager;
 import joptsimple.internal.Strings;
@@ -51,6 +52,7 @@ public class PetFeeder {
         Routes.register(server);
         server.start(config.port);
         ScheduleScheduler.startup();
+        ConsumptionHandler.startTracking();
         Signal.handle(new Signal("INT"), signal -> {
             System.out.println("Shutting down!");
             IOController.shutdown();
