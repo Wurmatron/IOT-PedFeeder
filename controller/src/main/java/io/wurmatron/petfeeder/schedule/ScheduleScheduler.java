@@ -1,7 +1,10 @@
 package io.wurmatron.petfeeder.schedule;
 
 import io.wurmatron.petfeeder.PetFeeder;
+import io.wurmatron.petfeeder.endpoints.DispenseController;
 import io.wurmatron.petfeeder.endpoints.ScheduleController;
+import io.wurmatron.petfeeder.gpio.IOController;
+import io.wurmatron.petfeeder.models.Dispense;
 import io.wurmatron.petfeeder.models.Schedule;
 import io.wurmatron.petfeeder.sql.SQLCache;
 
@@ -30,10 +33,14 @@ public class ScheduleScheduler {
         }
     }
 
-
     public static void runSchedule(Schedule schedule) {
         System.out.println("Running Schedule: '" + schedule.name + "@" + schedule.scheduleID + "'");
-        // TODO Run Schedule
+        // Create Dispense entry
+        Dispense dispense = new Dispense();
+        dispense.amount = schedule.amount;
+        dispense.before = IOController.getLoadCellWeight();
+        dispense.timestamp = Instant.now().getEpochSecond();
+        DispenseController.dispense(dispense);
         schedule.nextInterval = ScheduleController.calculateNextInterval(schedule);
         try {
             SQLCache.updateSchedule(schedule);
