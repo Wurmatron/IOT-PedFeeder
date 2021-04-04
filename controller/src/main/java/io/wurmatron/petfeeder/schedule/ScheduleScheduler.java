@@ -13,6 +13,7 @@ public class ScheduleScheduler {
 
     public static void startup() {
         System.out.println("Starting Scheduler");
+        checkAndUpdateSchedulesRequiringCalculations();
         PetFeeder.SCHEDULE.scheduleAtFixedRate(ScheduleScheduler::checkForSchedule, 0, PetFeeder.config.schedulePollInterval, TimeUnit.SECONDS);
     }
 
@@ -57,5 +58,20 @@ public class ScheduleScheduler {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void checkAndUpdateSchedulesRequiringCalculations() {
+        try {
+            Schedule[] schedules = SQLCache.getSchedules();
+            for (Schedule schedule : schedules) {
+                // Check if schedule needs to be updated, (timeout or initial calc required)
+                if (schedule.nextInterval < Instant.now().getEpochSecond()) {
+                    schedule.nextInterval = ScheduleController.calculateNextInterval(schedule);
+                    SQLCache.updateSchedule(schedule);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

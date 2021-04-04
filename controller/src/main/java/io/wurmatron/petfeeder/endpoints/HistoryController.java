@@ -73,7 +73,6 @@ public class HistoryController {
             },
             tags = {"History"}
     )
-    // TODO Implement
     public static Handler getConsumeHistory = ctx -> {
         try {
             // Validate inputs
