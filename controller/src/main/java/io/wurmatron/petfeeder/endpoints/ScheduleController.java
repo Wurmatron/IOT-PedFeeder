@@ -131,6 +131,7 @@ public class ScheduleController {
                     return;
                 }
             }
+            schedule.nextInterval = calculateNextInterval(schedule);
             SQLCache.add(schedule);
             // Update & Look for schedule in DB
             SQLCache.invalidateSchedules();
@@ -239,4 +240,9 @@ public class ScheduleController {
             ctx.status(400).json("{\"message\": \"id must be a integer\"}");
         }
     };
+
+    // TODO Implement
+    public static long calculateNextInterval(Schedule schedule) {
+        return 0;
+    }
 }

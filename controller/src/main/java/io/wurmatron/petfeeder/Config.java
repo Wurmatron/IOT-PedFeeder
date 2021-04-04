@@ -6,6 +6,7 @@ public class Config {
     public int port;
     public int motorPWM;
     public boolean testing;
+    public int schedulePollInterval;
 
     public Database Database;
 
@@ -15,13 +16,15 @@ public class Config {
         this.Database = new Database();
         this.motorPWM = 50;
         this.testing = false;
+        schedulePollInterval = 60;
     }
 
-    public Config(boolean debug, int port, int motorPWM, boolean testing, Config.Database database) {
+    public Config(boolean debug, int port, int motorPWM, boolean testing, int schedulePollInterval, Config.Database database) {
         this.debug = debug;
         this.port = port;
         this.motorPWM = motorPWM;
         this.testing = testing;
+        this.schedulePollInterval = schedulePollInterval;
         Database = database;
     }
 
