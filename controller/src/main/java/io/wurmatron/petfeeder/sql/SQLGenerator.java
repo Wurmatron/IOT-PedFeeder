@@ -15,7 +15,7 @@ import static io.wurmatron.petfeeder.PetFeeder.database;
 
 public class SQLGenerator {
 
-    protected static void add(Dispense dispense) throws SQLException {
+    protected static void addSQL(Dispense dispense) throws SQLException {
         Statement statement = database.getConnection().createStatement();
         String query = "INSERT INTO dispense (timestamp, amount, weightBefore, weightAfter) VALUES ('%TIMESTAMP%', '%AMOUNT%', '%WEIGHT_BEFORE%', '%WEIGHT_AFTER%');"
                 .replaceAll("%TIMESTAMP%", String.valueOf(dispense.timestamp))
@@ -25,7 +25,7 @@ public class SQLGenerator {
         statement.execute(query);
     }
 
-    protected static void add(Consume consume) throws SQLException {
+    protected static void addSQL(Consume consume) throws SQLException {
         Statement statement = database.getConnection().createStatement();
         String query = "INSERT INTO consume (timestamp, interval, amount) VALUES ('%TIMESTAMP%', '%INTERVAL%', '%AMOUNT%');"
                 .replaceAll("%TIMESTAMP%", String.valueOf(consume.startTimestamp))
@@ -34,7 +34,7 @@ public class SQLGenerator {
         statement.execute(query);
     }
 
-    protected static void add(Schedule schedule) throws SQLException {
+    protected static void addSQL(Schedule schedule) throws SQLException {
         Statement statement = database.getConnection().createStatement();
         String query = "INSERT INTO schedule (scheduleID, name, nextInterval, days, time, amount) VALUES ('%SCHEDULE_ID%', '%NAME%', '%NEXT_INTERVAL%','%DAYS%', '%TIME%', '%AMOUNT%');"
                 .replaceAll("%SCHEDULE_ID%", String.valueOf(schedule.scheduleID))
@@ -100,7 +100,7 @@ public class SQLGenerator {
         return schedules;
     }
 
-    protected static void deleteSchedule(int scheduleID) throws SQLException {
+    protected static void scheduleDelete(int scheduleID) throws SQLException {
         String query = "DELETE FROM schedule WHERE scheduleID='%ID%' LIMIT 1;".replaceAll("%ID%", "" + scheduleID);
         Statement statement = database.getConnection().createStatement();
         statement.execute(query);
@@ -118,7 +118,7 @@ public class SQLGenerator {
         return builder.toString();
     }
 
-    protected static void updateSchedule(Schedule schedule) throws SQLException {
+    protected static void scheduleUpdate(Schedule schedule) throws SQLException {
         String query = "UPDATE schedule SET `name`='%NAME%', `nextInterval`='%NEXT_INTERVAL%', `days`='%DAYS%', `time`='%TIME%', `amount`='%AMOUNT%'"
                 .replaceAll("%NAME%", schedule.name)
                 .replaceAll("%NEXT_INTERVAL%", "" + schedule.nextInterval)

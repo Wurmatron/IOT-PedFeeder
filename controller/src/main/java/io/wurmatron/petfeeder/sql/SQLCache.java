@@ -21,19 +21,18 @@ public class SQLCache extends SQLGenerator {
     private static long dispenseLastUpdate;
     private static long scheduleLastUpdate;
 
-
     public static void add(Dispense dispense) throws SQLException {
-        add(dispense);
+        addSQL(dispense);
         dispenseHistory.put(dispense.timestamp, dispense);
     }
 
     public static void add(Consume consume) throws SQLException {
-        add(consume);
+        addSQL(consume);
         consumeHistory.put(consume.startTimestamp, consume);
     }
 
     public static void add(Schedule schedule) throws SQLException {
-        add(schedule);
+        addSQL(schedule);
         scheduleCache.put(schedule.scheduleID, schedule);
     }
 
@@ -74,13 +73,22 @@ public class SQLCache extends SQLGenerator {
     }
 
     public static void deleteSchedule(int scheduleID) throws SQLException {
-        deleteSchedule(scheduleID);
+        scheduleDelete(scheduleID);
         scheduleCache.remove(scheduleID);
     }
 
     public static void updateSchedule(Schedule schedule) throws SQLException {
-        updateSchedule(schedule);
+        scheduleUpdate(schedule);
         scheduleCache.remove(schedule.scheduleID);
         scheduleCache.put(schedule.scheduleID, schedule);
+    }
+
+    public static void invalidateSchedules() {
+        scheduleLastUpdate = 0;
+    }
+
+    public static void invalidateHistory() {
+        consumeLastUpdate = 0;
+        dispenseLastUpdate = 0;
     }
 }
