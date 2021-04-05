@@ -61,7 +61,7 @@ public class ScheduleController {
         for (int x = start; x < (Math.min(schedules.length, (start + count))); x++) {
             copySchedules.add(schedules[x]);
         }
-        ctx.status(copySchedules.size() > 0 ? 200 : 204).json(PetFeeder.GSON.toJson(copySchedules.toArray(new Schedule[0])));
+        ctx.status(copySchedules.size() > 0 ? 200 : 204).json(copySchedules.toArray(new Schedule[0]));
     };
 
     @OpenApi(
@@ -86,7 +86,7 @@ public class ScheduleController {
                 for (Schedule schedule : schedules) {
                     scheduleCache.put(schedule.scheduleID, schedule);
                     if (schedule.scheduleID == id) {
-                        ctx.status(200).json(PetFeeder.GSON.toJson(schedule));
+                        ctx.status(200).json(schedule);
                         return;
                     }
                 }

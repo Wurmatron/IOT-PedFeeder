@@ -90,7 +90,11 @@ public class SQLGenerator {
             String[] sqlDays = set.getString("days").split(",");
             List<Schedule.Day> days = new ArrayList<>();
             for (String day : sqlDays) {
-                days.add(Schedule.Day.valueOf(day.toUpperCase()));
+                for(Schedule.Day d : Schedule.Day.values()) {
+                    if(d.name().equalsIgnoreCase(day)) {
+                        days.add(d);
+                    }
+                }
             }
             schedule.days = days.toArray(new Schedule.Day[0]);
             schedule.time = set.getString("time").split(",");
