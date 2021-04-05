@@ -8,8 +8,10 @@ import io.wurmatron.petfeeder.models.Schedule;
 import io.wurmatron.petfeeder.sql.SQLCache;
 import org.cliffc.high_scale_lib.NonBlockingHashMap;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class ScheduleController {
@@ -241,8 +243,24 @@ public class ScheduleController {
         }
     };
 
-    // TODO Implement
     public static long calculateNextInterval(Schedule schedule) {
-        return 0;
+        Date date = new Date(Instant.now().getEpochSecond() * 1000);
+        long latestTimestamp = Long.MAX_VALUE;
+        for (int index = 0; index < schedule.days.length; index++) {
+            long timestamp = getNextInterval(date, schedule.days[index], schedule.time[index]);
+            if (timestamp < latestTimestamp) {
+                latestTimestamp = timestamp;
+            }
+        }
+        return latestTimestamp;
+    }
+
+    // TODO Test
+    public static long getNextInterval(Date currentDate, Schedule.Day scheduledDay, String time) {
+        String[] timeData = time.split(":");
+        int hour = Integer.parseInt(timeData[0]);
+        int min = Integer.parseInt(timeData[1]);
+        Date scheduledDate = new Date(0, 0, Math.abs(currentDate.getDay() - scheduledDay.ordinal()), Math.abs(currentDate.getHours() - hour), Math.abs(currentDate.getMinutes() - min));
+        return currentDate.getTime() + scheduledDate.getTime();
     }
 }

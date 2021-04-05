@@ -22,6 +22,6 @@ public class Schedule {
     }
 
     public enum Day {
-        MONDAY, TUESDAY, WENDSDAY, TURSDAY, FRIDAY, SATURDAY, SUNDAY;
+        SUNDAY, MONDAY, TUESDAY, WENDSDAY, TURSDAY, FRIDAY, SATURDAY;
     }
 }
