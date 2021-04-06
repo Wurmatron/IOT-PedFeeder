@@ -28,3 +28,7 @@ Pet Feeder designed to automatically feed / track your pets eating habits.
 - Tracked dispense history
 - Tracked pet food consumption
 - Android App Control
+
+# Circuit
+
+![Circuit](https://i.imgur.com/PJCGTzU.png)
