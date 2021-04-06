@@ -31,4 +31,4 @@ Pet Feeder designed to automatically feed / track your pets eating habits.
 
 # Circuit
 
-![Circuit](https://i.imgur.com/PJCGTzU.png)
+![Circuit](https://i.imgur.com/UmQ7uOA.png)
