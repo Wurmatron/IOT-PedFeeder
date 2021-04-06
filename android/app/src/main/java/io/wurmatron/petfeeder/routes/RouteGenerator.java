@@ -76,4 +76,28 @@ public class RouteGenerator {
         return null;
     }
 
+    public static <T extends Object> T get(String data, Class<T> type) {
+        if (!data.isEmpty()) {
+            try {
+                URL obj = new URL(BASE_URL + data);
+                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                con.setRequestMethod("GET");
+                con.setRequestProperty("token", token);
+                con.setReadTimeout(300000);
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(con.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                return GSON.fromJson(response.toString(), type);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
 }

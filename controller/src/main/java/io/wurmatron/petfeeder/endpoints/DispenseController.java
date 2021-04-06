@@ -9,10 +9,15 @@ import io.javalin.plugin.openapi.annotations.OpenApiResponse;
 import io.wurmatron.petfeeder.PetFeeder;
 import io.wurmatron.petfeeder.gpio.IOController;
 import io.wurmatron.petfeeder.models.Dispense;
+import io.wurmatron.petfeeder.sql.SQLCache;
 
 import java.time.Instant;
+import java.util.concurrent.TimeUnit;
 
 public class DispenseController {
+
+    public static final int WAIT_TIME = 500;
+    public static final int MAX_WAIT_TIME = 5000;
 
     @OpenApi(
             summary = "Dispense the requested amount of food",
@@ -46,8 +51,30 @@ public class DispenseController {
         }
     };
 
-    // TODO Implement
     public static void dispense(Dispense dispense) {
+        PetFeeder.SCHEDULE.schedule(() -> {
+            for (int count = 0; count < dispense.amount; count++) {
+                dispenseFood();
+            }
+            dispense.after = IOController.getLoadCellWeight();
+            try {
+                SQLCache.add(dispense);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, 0, TimeUnit.SECONDS);
+    }
 
+    private static void dispenseFood() {
+        double before = IOController.getLoadCellWeight();
+        int spinAmount = 300;
+        long startTime = System.currentTimeMillis();
+        while (Math.round(before) == Math.round(IOController.getLoadCellWeight())) {
+            IOController.servo(50, spinAmount);
+            if (startTime + MAX_WAIT_TIME < System.currentTimeMillis()) {
+                spinAmount *= 2;
+            }
+            IOController.sleep(WAIT_TIME);
+        }
     }
 }
