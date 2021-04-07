@@ -10,7 +10,6 @@ import io.wurmatron.petfeeder.models.Weight;
 public class UpdateHelper {
 
     public static void updateWeight(TextView view) {
-        System.out.println("Scheduling Update");
         RouteGenerator.EXECUTORS.schedule(() -> {
             try {
                 Weight result = RouteGenerator.postResults("sensor/weight", "GET", Weight.class);

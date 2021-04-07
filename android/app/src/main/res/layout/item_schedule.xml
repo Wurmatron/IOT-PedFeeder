@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="381dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/scheduleName"
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            android:text="ScheduleName"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:background="@color/black"/>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TableRow>
+                <TextView
+                    android:id="@+id/timeDisp"
+                    android:layout_width="200sp"
+                    android:layout_height="20sp"
+                    android:text="Time:"
+                    android:textColor="@color/white"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:background="@color/black"/>
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="180sp"
+                    android:layout_height="20sp"
+                    android:text="3:30am"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:background="@color/black"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/dateDisp"
+                    android:layout_width="200sp"
+                    android:layout_height="20sp"
+                    android:text="Date:"
+                    android:textColor="@color/white"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:background="@color/black"/>
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="180sp"
+                    android:layout_height="20sp"
+                    android:text="Weekdays"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:background="@color/black"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/amountDisp"
+                    android:layout_width="200sp"
+                    android:layout_height="20sp"
+                    android:text="Amount:"
+                    android:textColor="@color/white"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:background="@color/black"/>
+                <TextView
+                    android:id="@+id/amount"
+                    android:layout_width="180sp"
+                    android:layout_height="20sp"
+                    android:text="500g"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:background="@color/black"/>
+            </TableRow>
+
+        </TableLayout>
+    </LinearLayout>
+
+</LinearLayout>
