@@ -1,12 +1,16 @@
 package io.wurmatron.petfeeder.ui.main;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,14 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.wurmatron.petfeeder.MainActivity;
 import io.wurmatron.petfeeder.R;
 import io.wurmatron.petfeeder.models.Schedule;
 import io.wurmatron.petfeeder.routes.RouteGenerator;
+import io.wurmatron.petfeeder.threading.ScheduleUpdateAsync;
 
 
 public class ScheduleFragment extends Fragment {
@@ -31,8 +35,7 @@ public class ScheduleFragment extends Fragment {
     private View v;
     private RecyclerView recyclerView;
     private List<Schedule> schedules;
-    private long lastUpdate;
-    private int UPDATE_PERIOD = 5 * 60000;
+    private HashMap<Schedule, TextView> editButtons;
 
     public static ScheduleFragment newInstance(int index) {
         ScheduleFragment fragment = new ScheduleFragment();
@@ -45,7 +48,7 @@ public class ScheduleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_schedule, container, false);
-        recyclerView = (RecyclerView) v.findViewById(R.id.schedule_recycleView);
+        recyclerView = v.findViewById(R.id.schedule_recycleView);
         schedules = new ArrayList<>();
         RecycleViewAdapter viewAdapter = new RecycleViewAdapter(getContext(), schedules);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -56,28 +59,8 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        ScheduleUpdateAsync sync = new ScheduleUpdateAsync();
+        ScheduleUpdateAsync sync = new ScheduleUpdateAsync(recyclerView);
         sync.execute("");
-    }
-
-    private class ScheduleUpdateAsync extends AsyncTask<String, String, Schedule[]> {
-
-        @Override
-        protected Schedule[] doInBackground(String... strings) {
-            if (((RecycleViewAdapter) recyclerView.getAdapter()).scheduleList != null)
-                ((RecycleViewAdapter) recyclerView.getAdapter()).scheduleList.clear();
-            else
-                ((RecycleViewAdapter) recyclerView.getAdapter()).scheduleList = new ArrayList<>();
-            Schedule[] schedules = RouteGenerator.get("schedules", Schedule[].class);
-            ((RecycleViewAdapter) recyclerView.getAdapter()).scheduleList.addAll(Arrays.asList(schedules));
-            return schedules;
-        }
-
-        @Override
-        protected void onPostExecute(Schedule[] schedules) {
-            super.onPostExecute(schedules);
-            recyclerView.getAdapter().notifyDataSetChanged();
-        }
     }
 
 }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,12 +23,12 @@ import io.wurmatron.petfeeder.routes.RouteGenerator;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ScheduleViewHolder> {
 
-    Context context;
-    List<Schedule> scheduleList;
+    public Context context;
+    public static List<Schedule> scheduleList;
 
     public RecycleViewAdapter(Context context, List<Schedule> scheduleList) {
         this.context = context;
-        this.scheduleList = scheduleList;
+        RecycleViewAdapter.scheduleList = scheduleList;
     }
 
     @Override
@@ -38,10 +40,12 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
     @Override
     public void onBindViewHolder(ScheduleViewHolder holder, int position) {
-        holder.scheduleName.setText(scheduleList.get(position).name);
-        holder.time.setText(String.join(", ", scheduleList.get(position).time));
-        holder.date.setText(Arrays.toString(scheduleList.get(position).days));
-        holder.amount.setText((scheduleList.get(position).amount * 100) + "g");
+        Schedule schedule = scheduleList.get(position);
+        holder.scheduleName.setText(schedule.name);
+        holder.time.setText(String.join(", ", schedule.time));
+        holder.date.setText(Arrays.toString(schedule.days));
+        holder.amount.setText((schedule.amount * 100) + "g");
+        holder.edit.setTag(R.string.scheduleStorage, schedule);
     }
 
     @Override
@@ -55,13 +59,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         TextView time;
         TextView date;
         TextView amount;
+        Button edit;
 
         public ScheduleViewHolder(View itemView) {
             super(itemView);
-            scheduleName = (TextView) itemView.findViewById(R.id.scheduleName);
-            time = (TextView) itemView.findViewById(R.id.time);
-            date = (TextView) itemView.findViewById(R.id.date);
-            amount = (TextView) itemView.findViewById(R.id.amount);
+            scheduleName = itemView.findViewById(R.id.scheduleName);
+            time = itemView.findViewById(R.id.time);
+            date = itemView.findViewById(R.id.date);
+            amount = itemView.findViewById(R.id.amount);
+            edit = itemView.findViewById(R.id.scheduleEdit);
         }
     }
 }

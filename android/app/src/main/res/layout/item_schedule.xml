@@ -4,7 +4,8 @@
     android:orientation="horizontal"
     android:padding="5dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#1C1C1C">
 
 
     <LinearLayout
@@ -20,8 +21,7 @@
             android:text="ScheduleName"
             android:textColor="@color/white"
             android:textAlignment="center"
-            android:textSize="24sp"
-            android:background="@color/black"/>
+            android:textSize="24sp" />
 
         <TableLayout
             android:layout_width="match_parent"
@@ -30,60 +30,78 @@
                 <TextView
                     android:id="@+id/timeDisp"
                     android:layout_width="200sp"
-                    android:layout_height="20sp"
+                    android:layout_height="30sp"
                     android:text="Time:"
                     android:textColor="@color/white"
                     android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:background="@color/black"/>
+                    android:textSize="24sp"/>
                 <TextView
                     android:id="@+id/time"
                     android:layout_width="180sp"
-                    android:layout_height="20sp"
+                    android:layout_height="30sp"
                     android:text="3:30am"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:background="@color/black"/>
+                    android:textSize="24sp"/>
             </TableRow>
 
             <TableRow>
                 <TextView
                     android:id="@+id/dateDisp"
                     android:layout_width="200sp"
-                    android:layout_height="20sp"
+                    android:layout_height="30sp"
                     android:text="Date:"
                     android:textColor="@color/white"
                     android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:background="@color/black"/>
+                    android:textSize="24sp" />
                 <TextView
                     android:id="@+id/date"
                     android:layout_width="180sp"
-                    android:layout_height="20sp"
+                    android:layout_height="30sp"
                     android:text="Weekdays"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:background="@color/black"/>
+                    android:textSize="24sp"/>
             </TableRow>
 
             <TableRow>
                 <TextView
                     android:id="@+id/amountDisp"
                     android:layout_width="200sp"
-                    android:layout_height="20sp"
+                    android:layout_height="30sp"
                     android:text="Amount:"
                     android:textColor="@color/white"
                     android:textAlignment="center"
-                    android:textSize="16sp"
-                    android:background="@color/black"/>
+                    android:textSize="24sp"/>
                 <TextView
                     android:id="@+id/amount"
                     android:layout_width="180sp"
-                    android:layout_height="20sp"
+                    android:layout_height="30sp"
                     android:text="500g"
                     android:textColor="@color/white"
+                    android:textSize="24sp"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/empty"
+                    android:layout_width="200sp"
+                    android:layout_height="30sp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textAlignment="center"
+                    android:textSize="24sp"/>
+                <Button
+                    android:id="@+id/scheduleEdit"
+                    android:padding="0sp"
+                    android:layout_marginLeft="80sp"
+                    android:layout_marginRight="20sp"
+                    android:layout_height="30sp"
+                    android:text="Edit"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:background="@color/black"/>
+                    android:background="@color/ap_gray"
+                    android:textAlignment="center"
+                    android:clickable="true"
+                    android:onClick="onEditSchedule"/>
             </TableRow>
 
         </TableLayout>

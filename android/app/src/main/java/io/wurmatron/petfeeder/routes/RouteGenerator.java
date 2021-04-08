@@ -44,6 +44,10 @@ public class RouteGenerator {
         send("post", url, data);
     }
 
+    public static void put(String url, Object data) {
+        send("put", url, data);
+    }
+
     public static void postQuery(String url, String query) {
         send("post", url + query, null);
     }

@@ -2,9 +2,9 @@ package io.wurmatron.petfeeder.models;
 
 public class Schedule {
 
-    public int scheduleID;
+    public Integer scheduleID;
     public String name;
-    public long nextInterval;
+    public Long nextInterval;
     public Day[] days;
     public String[] time;
     public int amount;
@@ -16,6 +16,15 @@ public class Schedule {
         this.days = days;
         this.time = time;
         this.amount = amount;
+    }
+
+    public Schedule(String name, Day[] days, String[] time, int amount) {
+        this.name = name;
+        this.days = days;
+        this.time = time;
+        this.amount = amount;
+        this.scheduleID = null;
+        this.nextInterval = null;
     }
 
     public Schedule() {

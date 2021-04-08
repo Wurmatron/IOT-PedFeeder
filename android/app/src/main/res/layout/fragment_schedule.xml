@@ -2,14 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="#1C1C1C"
+    android:orientation="vertical"
+    android:id="@+id/scheduleLayout">
+
+
+    <Button
+        android:id="@+id/scheduleCreate"
+        android:layout_width="100sp"
+        android:layout_height="35sp"
+        android:background="@color/ap_gray"
+        android:clickable="true"
+        android:layout_marginLeft="150sp"
+        android:textAlignment="center"
+        android:padding="0sp"
+        android:text="Create"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:onClick="onCreateSchedule"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/schedule_recycleView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/black">
+        android:layout_height="match_parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
