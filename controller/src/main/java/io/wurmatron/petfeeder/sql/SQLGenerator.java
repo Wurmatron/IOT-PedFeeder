@@ -36,10 +36,8 @@ public class SQLGenerator {
 
     protected static void addSQL(Schedule schedule) throws SQLException {
         Statement statement = database.getConnection().createStatement();
-        String query = "INSERT INTO schedule (scheduleID, name, nextInterval, days, time, amount) VALUES ('%SCHEDULE_ID%', '%NAME%', '%NEXT_INTERVAL%','%DAYS%', '%TIME%', '%AMOUNT%');"
-                .replaceAll("%SCHEDULE_ID%", String.valueOf(schedule.scheduleID))
+        String query = "INSERT INTO schedule (name, days, time, amount) VALUES ('%NAME%','%DAYS%', '%TIME%', '%AMOUNT%');"
                 .replaceAll("%NAME%", String.valueOf(schedule.name))
-                .replaceAll("%NEXT_INTERVAL%", String.valueOf(schedule.nextInterval))
                 .replaceAll("%DAYS%", daysToString(schedule.days))
                 .replaceAll("%TIME%", Strings.join(schedule.time, ","))
                 .replaceAll("%AMOUNT%", String.valueOf(schedule.amount));
