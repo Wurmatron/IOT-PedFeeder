@@ -5,7 +5,6 @@ import io.javalin.plugin.openapi.annotations.OpenApi;
 import io.javalin.plugin.openapi.annotations.OpenApiContent;
 import io.javalin.plugin.openapi.annotations.OpenApiParam;
 import io.javalin.plugin.openapi.annotations.OpenApiResponse;
-import io.wurmatron.petfeeder.PetFeeder;
 import io.wurmatron.petfeeder.models.Consume;
 import io.wurmatron.petfeeder.models.Dispense;
 import io.wurmatron.petfeeder.sql.SQLCache;
@@ -38,7 +37,7 @@ public class HistoryController {
                 return;
             }
             int count = MAX_HISTORY_PER_REQUEST;
-            if(ctx.queryParam("count") == null || !ctx.queryParam("count").isEmpty()) {
+            if(ctx.queryParam("count") != null && !ctx.queryParam("count").isEmpty()) {
                 try {
                     count = Integer.parseInt(ctx.queryParam("count"));
                     if(count <= 0) {
@@ -56,7 +55,7 @@ public class HistoryController {
             for(int x = 0; x < (Math.min(count, history.length)); x++) {
                 requestedHistory.add(history[x]);
             }
-            ctx.json(200).json(PetFeeder.GSON.toJson(requestedHistory.toArray(new Dispense[0])));
+            ctx.json(200).json(requestedHistory.toArray(new Dispense[0]));
         } catch (NumberFormatException e) {
             ctx.status(400).json("{\"message\": \"invalid startingPoint!\"}");
         }
@@ -82,7 +81,7 @@ public class HistoryController {
                 return;
             }
             int count = MAX_HISTORY_PER_REQUEST;
-            if(ctx.queryParam("count") == null || !ctx.queryParam("count").isEmpty()) {
+            if(ctx.queryParam("count") != null && !ctx.queryParam("count").isEmpty()) {
                 try {
                     count = Integer.parseInt(ctx.queryParam("count"));
                     if(count <= 0) {
@@ -100,7 +99,7 @@ public class HistoryController {
             for(int x = 0; x < (Math.min(count, history.length)); x++) {
                 requestedHistory.add(history[x]);
             }
-            ctx.json(200).json(PetFeeder.GSON.toJson(requestedHistory.toArray(new Consume[0])));
+            ctx.json(200).json(requestedHistory.toArray(new Consume[0]));
         } catch (NumberFormatException e) {
             ctx.status(400).json("{\"message\": \"invalid startingPoint!\"}");
         }

@@ -14,8 +14,8 @@ public class Routes {
         // Dispense
         app.post("/dispense", DispenseController.dispenseFood, roles(AuthRoles.USER, AuthRoles.ADMIN));
         // History
-        app.get("/history/dispense", HistoryController.getDispenseHistory, roles(AuthRoles.USER, AuthRoles.ADMIN));
-        app.get("/history/consume", HistoryController.getConsumeHistory, roles(AuthRoles.USER, AuthRoles.ADMIN));
+        app.get("/history/dispense/:startingPoint", HistoryController.getDispenseHistory, roles(AuthRoles.USER, AuthRoles.ADMIN));
+        app.get("/history/consume/:startingPoint", HistoryController.getConsumeHistory, roles(AuthRoles.USER, AuthRoles.ADMIN));
         // Schedule
         app.get("/schedules", ScheduleController.schedules, roles(AuthRoles.USER, AuthRoles.ADMIN));
         app.get("/schedule/:id", ScheduleController.getSchedule, roles(AuthRoles.USER, AuthRoles.ADMIN));
