@@ -4,19 +4,31 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import io.wurmatron.petfeeder.R;
+import io.wurmatron.petfeeder.models.Consume;
+import io.wurmatron.petfeeder.models.Schedule;
+import io.wurmatron.petfeeder.threading.HistoryUpdateAsync;
+import io.wurmatron.petfeeder.threading.ScheduleUpdateAsync;
 
 
 public class HistoryFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private PageViewModel pageViewModel;
+    private View v;
+    private RecyclerView recyclerView;
+    private List<Consume> consumes;
+    private HashMap<Consume, TextView> editButtons;
 
     public static HistoryFragment newInstance(int index) {
         HistoryFragment fragment = new HistoryFragment();
@@ -27,21 +39,21 @@ public class HistoryFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        pageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
-        int index = 1;
-        if (getArguments() != null) {
-            index = getArguments().getInt(ARG_SECTION_NUMBER);
-        }
-        pageViewModel.setIndex(index);
-        pageViewModel.name = getResources().getString(SectionsPagerAdapter.TAB_TITLES[index - 1]);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        v = inflater.inflate(R.layout.fragment_history, container, false);
+        recyclerView = v.findViewById(R.id.history_recycleView);
+        consumes = new ArrayList<>();
+        HistoryRecycleViewAdapter viewAdapter = new HistoryRecycleViewAdapter(getContext(), consumes);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(viewAdapter);
+        return v;
     }
 
     @Override
-    public View onCreateView(
-            @NonNull LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_history, container, false);
+    public void onStart() {
+        super.onStart();
+        HistoryUpdateAsync sync = new HistoryUpdateAsync(recyclerView);
+        sync.execute("");
     }
+
 }

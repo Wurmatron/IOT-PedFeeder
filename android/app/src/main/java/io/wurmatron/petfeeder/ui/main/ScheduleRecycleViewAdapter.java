@@ -5,30 +5,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.wurmatron.petfeeder.R;
 import io.wurmatron.petfeeder.models.Schedule;
-import io.wurmatron.petfeeder.routes.RouteGenerator;
 
-public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ScheduleViewHolder> {
+public class ScheduleRecycleViewAdapter extends RecyclerView.Adapter<ScheduleRecycleViewAdapter.ScheduleViewHolder> {
 
     public Context context;
     public static List<Schedule> scheduleList;
 
-    public RecycleViewAdapter(Context context, List<Schedule> scheduleList) {
+    public ScheduleRecycleViewAdapter(Context context, List<Schedule> scheduleList) {
         this.context = context;
-        RecycleViewAdapter.scheduleList = scheduleList;
+        ScheduleRecycleViewAdapter.scheduleList = scheduleList;
     }
 
     @Override

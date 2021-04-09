@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1C1C1C"
+    android:orientation="horizontal"
+    android:paddingLeft="65sp">
+
+
+    <LinearLayout
+        android:layout_width="251dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <TableLayout
+            android:layout_width="250sp"
+            android:layout_height="25sp"
+            android:layout_gravity="center">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/historyDate"
+                    android:paddingRight="15sp"
+                    android:text="1/2/2021"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/historyTime"
+                    android:layout_marginRight="30sp"
+                    android:text="5m"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/historyConsumed"
+                    android:layout_width="wrap_content"
+                    android:paddingRight="50sp"
+                    android:text="250g"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </TableRow>
+
+
+        </TableLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 import io.wurmatron.petfeeder.models.Schedule;
 import io.wurmatron.petfeeder.routes.RouteGenerator;
-import io.wurmatron.petfeeder.ui.main.RecycleViewAdapter;
+import io.wurmatron.petfeeder.ui.main.ScheduleRecycleViewAdapter;
 
 public class ScheduleUpdateAsync extends AsyncTask<String, String, Schedule[]> {
 
@@ -21,12 +21,12 @@ public class ScheduleUpdateAsync extends AsyncTask<String, String, Schedule[]> {
 
     @Override
     protected Schedule[] doInBackground(String... strings) {
-        if (((RecycleViewAdapter) recyclerView.getAdapter()).scheduleList != null)
-            ((RecycleViewAdapter) recyclerView.getAdapter()).scheduleList.clear();
+        if (((ScheduleRecycleViewAdapter) recyclerView.getAdapter()).scheduleList != null)
+            ((ScheduleRecycleViewAdapter) recyclerView.getAdapter()).scheduleList.clear();
         else
-            ((RecycleViewAdapter) recyclerView.getAdapter()).scheduleList = new ArrayList<>();
+            ((ScheduleRecycleViewAdapter) recyclerView.getAdapter()).scheduleList = new ArrayList<>();
         Schedule[] schedules = RouteGenerator.get("schedules", Schedule[].class);
-        ((RecycleViewAdapter) recyclerView.getAdapter()).scheduleList.addAll(Arrays.asList(schedules));
+        ((ScheduleRecycleViewAdapter) recyclerView.getAdapter()).scheduleList.addAll(Arrays.asList(schedules));
         return schedules;
     }
 
