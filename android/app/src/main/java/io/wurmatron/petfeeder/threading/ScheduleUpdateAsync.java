@@ -26,7 +26,8 @@ public class ScheduleUpdateAsync extends AsyncTask<String, String, Schedule[]> {
         else
             ((ScheduleRecycleViewAdapter) recyclerView.getAdapter()).scheduleList = new ArrayList<>();
         Schedule[] schedules = RouteGenerator.get("schedules", Schedule[].class);
-        ((ScheduleRecycleViewAdapter) recyclerView.getAdapter()).scheduleList.addAll(Arrays.asList(schedules));
+        if (schedules != null && schedules.length > 0)
+            ((ScheduleRecycleViewAdapter) recyclerView.getAdapter()).scheduleList.addAll(Arrays.asList(schedules));
         return schedules;
     }
 
