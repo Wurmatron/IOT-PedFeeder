@@ -4,10 +4,24 @@ import android.os.AsyncTask;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.androidplot.ui.Anchor;
+import com.androidplot.ui.DynamicTableModel;
+import com.androidplot.ui.FixedTableModel;
+import com.androidplot.ui.HorizontalPositioning;
+import com.androidplot.ui.Size;
+import com.androidplot.ui.SizeMetric;
+import com.androidplot.ui.SizeMode;
+import com.androidplot.ui.TableOrder;
+import com.androidplot.ui.VerticalPositioning;
+import com.androidplot.util.PixelUtils;
+import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.CatmullRomInterpolator;
 import com.androidplot.xy.LineAndPointFormatter;
+import com.androidplot.xy.PanZoom;
+import com.androidplot.xy.PointLabeler;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYGraphWidget;
+import com.androidplot.xy.XYLegendWidget;
 import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 
@@ -68,9 +82,14 @@ public class HistoryUpdateAsync extends AsyncTask<String, String, Consume[]> {
         }
         // Consume Series
         List<Number> consumeX = new ArrayList<>();
+        double num = 0;
         for (int day = 1; day < 30; day++) {
-            consumeX.add(getForDay(consume, month, day, year));
+            Number temp = getForDay(consume, month, day, year);
+            if (num < temp.doubleValue())
+                num = temp.doubleValue();
+            consumeX.add(temp);
         }
+        plot.getLegend().setVisible(false);
         XYSeries series1 = new SimpleXYSeries(consumeX, SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Consume");
         LineAndPointFormatter series1Format = new LineAndPointFormatter(plot.getContext(), R.xml.line_point_formatter_with_labels);
         series1Format.setInterpolationParams(new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
@@ -80,13 +99,14 @@ public class HistoryUpdateAsync extends AsyncTask<String, String, Consume[]> {
         for (int day = 1; day < 30; day++) {
             dispsnseX.add(getForDay(dispense, month, day, year));
         }
-        XYSeries series2 = new SimpleXYSeries(dispsnseX, SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Dispense");
+        XYSeries series2 = new SimpleXYSeries(dispsnseX, SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, "Diso");
         LineAndPointFormatter series2Format = new LineAndPointFormatter(plot.getContext(), R.xml.line_point_formatter2_with_labels);
         series2Format.setInterpolationParams(new CatmullRomInterpolator.Params(10, CatmullRomInterpolator.Type.Centripetal));
         plot.addSeries(series2, series2Format);
-
         Number[] domainLabels = labels.toArray(new Number[0]);
-        plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.BOTTOM).setFormat(new Format() {
+        PanZoom.attach(plot);
+        plot.setRangeBoundaries(0, Math.round(num + (num * .2)), BoundaryMode.FIXED);
+        plot.getGraph().getLineLabelStyle(XYGraphWidget.Edge.LEFT).setFormat(new Format() {
             @Override
             public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {
                 int i = Math.round(((Number) obj).floatValue());
@@ -98,6 +118,8 @@ public class HistoryUpdateAsync extends AsyncTask<String, String, Consume[]> {
                 return null;
             }
         });
+        plot.setTitle("Monthly History");
+        plot.getLegend().setAnchor(Anchor.TOP_MIDDLE);
     }
 
     private static Number getForDay(Consume[] data, int month, int day, int year) {
