@@ -23,6 +23,7 @@ public class GeneralFragment extends Fragment {
     private PageViewModel pageViewModel;
 
     private TextView currentWeight;
+    private TextView nextSchedule;
 
     public static GeneralFragment newInstance(int index) {
         GeneralFragment fragment = new GeneralFragment();
@@ -55,6 +56,8 @@ public class GeneralFragment extends Fragment {
     public void onStart() {
         super.onStart();
         currentWeight = getView().findViewById(R.id.currentWeight);
+        nextSchedule = getView().findViewById(R.id.upcomingSchedule);
         UpdateHelper.updateWeight(currentWeight);
+        UpdateHelper.updateNextSchedule(nextSchedule);
     }
 }

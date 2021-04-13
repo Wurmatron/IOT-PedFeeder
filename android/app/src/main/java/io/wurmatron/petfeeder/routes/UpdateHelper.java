@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import java.util.concurrent.TimeUnit;
 
+import io.wurmatron.petfeeder.models.Schedule;
 import io.wurmatron.petfeeder.models.Weight;
 
 public class UpdateHelper {
@@ -24,5 +25,20 @@ public class UpdateHelper {
                 view.setText("Err");
             }
         }, 0, TimeUnit.SECONDS);
+    }
+
+    public static void updateNextSchedule(TextView view) {
+        RouteGenerator.EXECUTORS.schedule(()-> {
+            Schedule[] schedules = RouteGenerator.get("schedules", Schedule[].class);
+            long nextTime = schedules[0].nextInterval;
+            Schedule nextSchedule = schedules[0];
+            for(Schedule schedule : schedules) {
+                if(nextTime > schedule.nextInterval) {
+                    nextSchedule = schedule;
+                    nextTime = schedule.nextInterval;
+                }
+            }
+            view.setText(" " + nextSchedule.name);
+        },0,TimeUnit.SECONDS);
     }
 }
