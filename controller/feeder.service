@@ -1,0 +1,12 @@
+[Unit]
+Description=Pet Feeder (Controller)
+
+[Service]
+WorkingDirectory=/opt/feeder
+ExecStart=/bin/java -Xms128m -Xmx256m -jar IOT-PetFeeder.jar
+Type=simple
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
