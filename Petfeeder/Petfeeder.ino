@@ -19,9 +19,9 @@
 #include <HX711.h> 
 
 // Setup for letting esp8266 connect to blynk app 
-char auth[] = "jFZEpOoRfM6_OyrbRoU_Sq46khv0_T57";
-char ssid[] = "Reiber";
-char pass[] = "1110000111";
+char auth[] = "authtoken";
+char ssid[] = "ssid";
+char pass[] = "password";
 #define ESP8266_BAUD 115200
 ESP8266 wifi(&Serial);
 
