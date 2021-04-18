@@ -16,9 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 
 import io.wurmatron.petfeeder.R;
+import io.wurmatron.petfeeder.models.Dispense;
 import io.wurmatron.petfeeder.models.Results;
 import io.wurmatron.petfeeder.models.Weight;
 import io.wurmatron.petfeeder.routes.RouteGenerator;
@@ -53,6 +55,8 @@ public class SettingsFragment extends Fragment {
     private EditText ipAddr;
     private TextView isConnected;
     private EditText token;
+    private Button forceDispense;
+    private Button reboot;
 
 
     public static SettingsFragment newInstance(int index) {
@@ -111,6 +115,14 @@ public class SettingsFragment extends Fragment {
             ipAddr = getView().findViewById(R.id.editIP);
             token = getView().findViewById(R.id.editToken);
             isConnected = getView().findViewById(R.id.isConnected);
+            // Misc
+            forceDispense = getView().findViewById(R.id.forceDispense);
+            forceDispense.setOnClickListener((e) -> {
+                RouteGenerator.EXECUTORS.schedule(() -> {
+                    RouteGenerator.post("dispense", new Dispense(1, Instant.now().getEpochSecond(), 0, 0));
+                }, 0, TimeUnit.SECONDS);
+            });
+            reboot = getView().findViewById(R.id.reboot);
             setupEditUpdates();
             // Setup Default settings
             updatePhotoStatus();

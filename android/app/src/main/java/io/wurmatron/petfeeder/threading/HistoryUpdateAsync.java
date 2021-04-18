@@ -67,7 +67,8 @@ public class HistoryUpdateAsync extends AsyncTask<String, String, Consume[]> {
             ((HistoryRecycleViewAdapter) recyclerView.getAdapter()).consumeList = new ArrayList<>();
         consume = RouteGenerator.get("history/consume/" + 1, Consume[].class);
         dispense = RouteGenerator.get("history/dispense/" + 2, Dispense[].class);
-        ((HistoryRecycleViewAdapter) recyclerView.getAdapter()).consumeList.addAll(Arrays.asList(consume));
+        if (((HistoryRecycleViewAdapter) recyclerView.getAdapter()).consumeList != null && consume != null && consume.length > 0)
+            ((HistoryRecycleViewAdapter) recyclerView.getAdapter()).consumeList.addAll(Arrays.asList(consume));
         return consume;
     }
 
